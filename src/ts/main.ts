@@ -14,6 +14,11 @@ type Firefly = {
 const MAX_PARTICLE_COUNT = 16
 const BLINKING_TIME = 2.5 // 2 ~ 3
 
+const assetsUrl =
+  process.env.NODE_ENV === 'production'
+    ? '/pub_web_pixijs_night-fire-fly/assets'
+    : '/assets'
+
 // Links
 // - https://pixijs.com/examples/basic/particle-container?_highlight=parti
 // - https://ja.esotericsoftware.com/forum/d/17094-unity%E3%81%AE%E3%83%9E%E3%83%86%E3%83%AA%E3%82%A2%E3%83%AB%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E3%83%91%E3%83%BC%E3%83%84%E3%81%AE%E8%BC%AA%E9%83%AD%E7%B7%9A%E3%81%8C%E6%B5%AE%E3%81%8D%E4%B8%8A%E3%81%8C%E3%81%A3%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86/3
@@ -32,7 +37,7 @@ window.onload = async () => {
 
   // background
   const aspectRatio = app.screen.width / app.screen.height
-  const background = PIXI.Sprite.from('/assets/images/background.jpg')
+  const background = PIXI.Sprite.from(`${assetsUrl}/images/background.jpg`)
   background.anchor.set(0.5)
   background.position.set(app.screen.width / 2, app.screen.height / 2)
   background.scale.set(aspectRatio >= 1 ? aspectRatio : 1 / aspectRatio)
@@ -48,7 +53,7 @@ window.onload = async () => {
   })
 
   for (let i = 0; i < MAX_PARTICLE_COUNT; i++) {
-    const fireflySprite = PIXI.Sprite.from('/assets/images/fire-fly.png')
+    const fireflySprite = PIXI.Sprite.from(`${assetsUrl}/images/fire-fly.png`)
     fireflySprite.anchor.set(0.5)
     fireflySprite.scale.set(0.4 + Math.random() * 0.3)
     fireflySprite.position.set(
@@ -67,7 +72,9 @@ window.onload = async () => {
   }
 
   // spineAnimation
-  const spineAnimation = await PIXI.Assets.load('/assets/spine-data/model.json')
+  const spineAnimation = await PIXI.Assets.load(
+    `${assetsUrl}/spine-data/model.json`
+  )
     .then((res) => {
       const animation = new Spine(res.spineData)
 
