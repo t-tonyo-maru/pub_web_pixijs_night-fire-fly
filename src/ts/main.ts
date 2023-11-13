@@ -43,7 +43,7 @@ window.onload = async () => {
   background.scale.set(aspectRatio >= 1 ? aspectRatio : 1 / aspectRatio)
 
   // fire flies
-  const fireFlies: Firefly[] = []
+  const fireflies: Firefly[] = []
   const particleContainer = new PIXI.ParticleContainer(MAX_PARTICLE_COUNT, {
     scale: true,
     position: true,
@@ -62,7 +62,7 @@ window.onload = async () => {
     )
     fireflySprite.alpha = Math.random()
 
-    fireFlies.push({
+    fireflies.push({
       sprite: fireflySprite,
       phase: Math.random() * 2 * Math.PI,
       speed: Math.random(),
@@ -99,45 +99,45 @@ window.onload = async () => {
   // - https://lil-gui.georgealways.com/
   const gui = new GUI()
   const guiObject = {
-    fireFlyParameters: {
-      showfireFlies: true
+    fireflyParameters: {
+      show: true
     },
     spineParameters: {
       blink: false
     }
   }
   // paramter
-  const fireFlyFolder = gui.addFolder('FireFly')
-  fireFlyFolder.add(guiObject.fireFlyParameters, 'showfireFlies')
+  const fireflyFolder = gui.addFolder('Firefly')
+  fireflyFolder.add(guiObject.fireflyParameters, 'show')
   const spineFolder = gui.addFolder('Spine')
   spineFolder.add(guiObject.spineParameters, 'blink')
 
   // animation
-  app.ticker.add((delta) => {
+  app.ticker.add(() => {
     // gui
     // gui: fire fly
-    particleContainer.visible = guiObject.fireFlyParameters.showfireFlies
+    particleContainer.visible = guiObject.fireflyParameters.show
 
     // fire fly
     const time = Date.now() / 1000
     for (let i = 0; i < MAX_PARTICLE_COUNT; i++) {
-      fireFlies[i].sprite.alpha =
-        (Math.sin(time + fireFlies[i].phase) + 1) / BLINKING_TIME
+      fireflies[i].sprite.alpha =
+        (Math.sin(time + fireflies[i].phase) + 1) / BLINKING_TIME
 
-      fireFlies[i].sprite.x +=
-        fireFlies[i].speed * Math.cos(fireFlies[i].direction)
-      fireFlies[i].sprite.y +=
-        fireFlies[i].speed * Math.sin(fireFlies[i].direction)
+      fireflies[i].sprite.x +=
+        fireflies[i].speed * Math.cos(fireflies[i].direction)
+      fireflies[i].sprite.y +=
+        fireflies[i].speed * Math.sin(fireflies[i].direction)
 
-      if (fireFlies[i].sprite.x < 0) {
-        fireFlies[i].sprite.x += app.screen.width
-      } else if (fireFlies[i].sprite.x > app.screen.width) {
-        fireFlies[i].sprite.x -= app.screen.width
+      if (fireflies[i].sprite.x < 0) {
+        fireflies[i].sprite.x += app.screen.width
+      } else if (fireflies[i].sprite.x > app.screen.width) {
+        fireflies[i].sprite.x -= app.screen.width
       }
-      if (fireFlies[i].sprite.y < 0) {
-        fireFlies[i].sprite.y += app.screen.height
-      } else if (fireFlies[i].sprite.y > app.screen.height) {
-        fireFlies[i].sprite.y -= app.screen.height
+      if (fireflies[i].sprite.y < 0) {
+        fireflies[i].sprite.y += app.screen.height
+      } else if (fireflies[i].sprite.y > app.screen.height) {
+        fireflies[i].sprite.y -= app.screen.height
       }
     }
 
